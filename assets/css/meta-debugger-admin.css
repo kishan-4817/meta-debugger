@@ -4,30 +4,160 @@
  * @package MetaDebugger
  */
 
+/* ===== Admin Settings Page ===== */
 .wpmd-settings-wrap {
-    max-width: 900px;
-    margin-top: 20px;
+    max-width: 680px;
+    margin-top: 24px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
+.wpmd-settings-wrap h1 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #171717;
+    letter-spacing: -0.02em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 24px;
+}
+
+.wpmd-settings-wrap h1 .dashicons {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+    color: #171717;
+}
+
+/* ===== Card Component ===== */
 .wpmd-card {
-    background: #fff;
-    border: 1px solid #ccd0d4;
-    border-radius: 6px;
+    background: #ffffff;
+    border: 1px solid #eaeaea;
+    border-radius: 8px;
     padding: 20px 24px;
-    margin-bottom: 20px;
-    box-shadow: 0 1px 1px rgba(0,0,0,0.04);
+    margin-bottom: 16px;
+}
+
+@media (prefers-color-scheme: dark) {
+    .wpmd-card {
+        background: #171717;
+        border-color: #262626;
+    }
 }
 
 .wpmd-card h2 {
     margin-top: 0;
-    padding-bottom: 8px;
-    border-bottom: 1px solid #f0f0f1;
-    font-size: 16px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #eaeaea;
+    font-size: 15px;
     font-weight: 600;
+    color: #171717;
+    letter-spacing: -0.01em;
 }
 
+@media (prefers-color-scheme: dark) {
+    .wpmd-card h2 {
+        color: #ededed;
+        border-bottom-color: #262626;
+    }
+}
+
+/* ===== Form Elements ===== */
+.wpmd-settings-wrap .form-table th {
+    font-weight: 500;
+    color: #171717;
+    padding: 12px 16px 12px 0;
+    font-size: 13px;
+}
+
+.wpmd-settings-wrap .form-table td {
+    padding: 12px 0;
+}
+
+.wpmd-settings-wrap .form-table input[type="text"],
+.wpmd-settings-wrap .form-table input[type="number"],
+.wpmd-settings-wrap .form-table textarea,
+.wpmd-settings-wrap .form-table select {
+    border: 1px solid #eaeaea;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 13px;
+    color: #171717;
+    background: #fafafa;
+    transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.wpmd-settings-wrap .form-table input:focus,
+.wpmd-settings-wrap .form-table textarea:focus,
+.wpmd-settings-wrap .form-table select:focus {
+    border-color: #171717;
+    box-shadow: 0 0 0 2px #eaeaea;
+    outline: none;
+}
+
+.wpmd-settings-wrap .form-table textarea {
+    min-height: 80px;
+    font-family: "SF Mono", "Fira Code", monospace;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.wpmd-settings-wrap .form-table select {
+    min-width: 200px;
+    cursor: pointer;
+}
+
+.wpmd-settings-wrap .form-table label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #525252;
+    cursor: pointer;
+}
+
+.wpmd-settings-wrap .form-table input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    border: 1px solid #eaeaea;
+    cursor: pointer;
+    accent-color: #171717;
+}
+
+.wpmd-settings-wrap .description {
+    font-size: 12px;
+    color: #a3a3a3;
+    margin-top: 6px;
+    line-height: 1.5;
+}
+
+/* ===== Submit Button ===== */
+.wpmd-settings-wrap .submit .button-primary {
+    background: #171717;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 20px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 150ms ease;
+    letter-spacing: -0.01em;
+}
+
+.wpmd-settings-wrap .submit .button-primary:hover {
+    background: #404040;
+}
+
+.wpmd-settings-wrap .submit .button-primary:active {
+    transform: translateY(1px);
+}
+
+/* ===== AI Card (if enabled in future) ===== */
 .wpmd-ai-card {
-    border-left: 4px solid #f97316;
+    border-left: 3px solid #171717;
     position: relative;
 }
 
@@ -38,13 +168,13 @@
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    background: #fff7ed;
-    color: #c2410c;
-    border: 1px solid #fed7aa;
+    background: #fafafa;
+    color: #525252;
+    border: 1px solid #eaeaea;
     padding: 3px 8px;
-    border-radius: 12px;
+    border-radius: 4px;
     font-size: 11px;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 .wpmd-ai-badge .dashicons {
@@ -53,14 +183,109 @@
     height: 14px;
 }
 
+/* ===== Test Result Messages ===== */
+#wpmd-test-result {
+    margin-top: 10px;
+    font-size: 13px;
+    padding: 8px 12px;
+    border-radius: 6px;
+}
+
 #wpmd-test-result.success {
-    color: #15803d;
+    color: #16a34a;
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
 }
 
 #wpmd-test-result.error {
     color: #dc2626;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
 }
 
 #wpmd-test-result.loading {
-    color: #6b7280;
+    color: #525252;
+    background: #fafafa;
+    border: 1px solid #eaeaea;
+}
+
+/* ===== Dark Mode Adjustments ===== */
+@media (prefers-color-scheme: dark) {
+    .wpmd-settings-wrap h1 {
+        color: #ededed;
+    }
+
+    .wpmd-settings-wrap h1 .dashicons {
+        color: #ededed;
+    }
+
+    .wpmd-settings-wrap .form-table th {
+        color: #ededed;
+    }
+
+    .wpmd-settings-wrap .form-table td {
+        color: #a3a3a3;
+    }
+
+    .wpmd-settings-wrap .form-table input[type="text"],
+    .wpmd-settings-wrap .form-table input[type="number"],
+    .wpmd-settings-wrap .form-table textarea,
+    .wpmd-settings-wrap .form-table select {
+        background: #0a0a0a;
+        border-color: #262626;
+        color: #ededed;
+    }
+
+    .wpmd-settings-wrap .form-table input:focus,
+    .wpmd-settings-wrap .form-table textarea:focus,
+    .wpmd-settings-wrap .form-table select:focus {
+        border-color: #ededed;
+        box-shadow: 0 0 0 2px #262626;
+    }
+
+    .wpmd-settings-wrap .form-table label {
+        color: #a3a3a3;
+    }
+
+    .wpmd-settings-wrap .form-table input[type="checkbox"] {
+        border-color: #3f3f46;
+        background: #0a0a0a;
+    }
+
+    .wpmd-settings-wrap .description {
+        color: #666666;
+    }
+
+    .wpmd-settings-wrap .submit .button-primary {
+        background: #ededed;
+        color: #0a0a0a;
+    }
+
+    .wpmd-settings-wrap .submit .button-primary:hover {
+        background: #d4d4d4;
+    }
+
+    .wpmd-ai-badge {
+        background: #171717;
+        color: #a3a3a3;
+        border-color: #262626;
+    }
+
+    #wpmd-test-result.success {
+        color: #22c55e;
+        background: #052e16;
+        border-color: #166534;
+    }
+
+    #wpmd-test-result.error {
+        color: #ef4444;
+        background: #450a0a;
+        border-color: #7f1d1d;
+    }
+
+    #wpmd-test-result.loading {
+        color: #a3a3a3;
+        background: #171717;
+        border-color: #262626;
+    }
 }
