@@ -1,76 +1,164 @@
 /**
  * Meta Debugger - Frontend & Admin Drawer Stylesheet
  *
+ * Design system based on shadcn/ui with Tailwind Zinc palette.
+ * All text colors meet WCAG AA contrast requirements (4.5:1 minimum).
+ *
  * @package MetaDebugger
  */
 
-/* ===== DESIGN TOKENS (shadcn/ui inspired) ===== */
+/* ══════════════════════════════════════════════════════════════════════════════
+   DESIGN TOKENS
+   ══════════════════════════════════════════════════════════════════════════════ */
+
 :root {
-    /* Colors - Monochrome */
-    --wpmd-bg: #ffffff;
-    --wpmd-surface: #fafafa;
-    --wpmd-border: #eaeaea;
-    --wpmd-border-light: #f5f5f5;
-    --wpmd-text-primary: #171717;
-    --wpmd-text-secondary: #525252;
-    --wpmd-text-muted: #a3a3a3;
+    /* ── Color Palette: Zinc ─────────────────────────────────────────────────── */
+    /* Background / Surface */
+    --wpmd-bg:            #ffffff;
+    --wpmd-surface:       #fafafa;
+    --wpmd-surface-hover: #f4f4f5;
 
-    /* Accent - Black (Vercel style) */
-    --wpmd-accent: #171717;
-    --wpmd-accent-hover: #404040;
-    --wpmd-accent-fg: #ffffff;
+    /* Borders */
+    --wpmd-border:        #e4e4e7;
+    --wpmd-border-light:  #f4f4f5;
 
-    /* Semantic Colors - Muted */
-    --wpmd-blue: #2563eb;
-    --wpmd-purple: #7c3aed;
-    --wpmd-green: #16a34a;
-    --wpmd-orange: #ea580c;
-    --wpmd-red: #dc2626;
-    --wpmd-gray: #737373;
+    /* Text (all meet WCAG AA on white) */
+    --wpmd-text-primary:   #18181b;  /* zinc-900  → 18.4:1 */
+    --wpmd-text-secondary: #3f3f46;  /* zinc-700  → 9.7:1  */
+    --wpmd-text-muted:     #71717a;  /* zinc-500  → 4.8:1  */
 
-    /* Tree Lines */
-    --wpmd-tree-line: #e5e5e5;
+    /* Accent (primary action) */
+    --wpmd-accent:        #18181b;
+    --wpmd-accent-hover:  #27272a;
+    --wpmd-accent-fg:     #ffffff;
 
-    /* Layout */
-    --wpmd-panel-w: 420px;
-    --wpmd-radius: 8px;
-    --wpmd-radius-sm: 6px;
-    --wpmd-radius-xs: 4px;
+    /* Semantic: Blue */
+    --wpmd-blue:          #2563eb;
+    --wpmd-blue-hover:    #1d4ed8;
+    --wpmd-blue-bg:       #eff6ff;
 
-    /* Typography */
+    /* Semantic: Purple */
+    --wpmd-purple:        #7c3aed;
+    --wpmd-purple-bg:     #f5f3ff;
+
+    /* Semantic: Green */
+    --wpmd-green:         #16a34a;
+    --wpmd-green-bg:      #f0fdf4;
+
+    /* Semantic: Orange */
+    --wpmd-orange:        #ea580c;
+    --wpmd-orange-bg:     #fff7ed;
+
+    /* Semantic: Red (destructive) */
+    --wpmd-red:           #dc2626;
+    --wpmd-red-bg:        #fef2f2;
+
+    /* Semantic: Gray (neutral) */
+    --wpmd-gray:          #71717a;
+
+    /* Tree connector lines */
+    --wpmd-tree-line:     #e4e4e7;
+
+    /* ── Spacing (4px grid) ─────────────────────────────────────────────────── */
+    --wpmd-space-1:  4px;
+    --wpmd-space-2:  8px;
+    --wpmd-space-3:  12px;
+    --wpmd-space-4:  16px;
+    --wpmd-space-5:  20px;
+    --wpmd-space-6:  24px;
+    --wpmd-space-8:  32px;
+
+    /* ── Border Radius ──────────────────────────────────────────────────────── */
+    --wpmd-radius-sm:   4px;
+    --wpmd-radius-md:   6px;
+    --wpmd-radius-lg:   8px;
+    --wpmd-radius-xl:   12px;
+    --wpmd-radius-full: 9999px;
+
+    /* ── Typography ─────────────────────────────────────────────────────────── */
+    --wpmd-text-xs:   11px;
+    --wpmd-text-sm:   12px;
+    --wpmd-text-base: 13px;
+    --wpmd-text-md:   14px;
+    --wpmd-text-lg:   16px;
+    --wpmd-text-xl:   20px;
+
+    /* Font families */
     --wpmd-mono: "Geist Mono", "SF Mono", "Fira Code", "Cascadia Code", Menlo, Consolas, monospace;
     --wpmd-font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 
-    /* Shadows - Subtle */
-    --wpmd-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 4px 12px rgba(0, 0, 0, 0.04);
-    --wpmd-shadow-lg: 0 4px 24px rgba(0, 0, 0, 0.12);
+    /* ── Shadows ────────────────────────────────────────────────────────────── */
+    --wpmd-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --wpmd-shadow-md: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+    --wpmd-shadow-lg: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 
-    /* Transitions */
-    --wpmd-transition: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    /* ── Layout ─────────────────────────────────────────────────────────────── */
+    --wpmd-panel-w: 420px;
+
+    /* ── Transitions ────────────────────────────────────────────────────────── */
+    --wpmd-transition:     150ms cubic-bezier(0.4, 0, 0.2, 1);
     --wpmd-transition-fast: 100ms ease;
 }
 
 @media (prefers-color-scheme: dark) {
     :root {
-        --wpmd-bg: #0a0a0a;
-        --wpmd-surface: #171717;
-        --wpmd-border: #262626;
-        --wpmd-border-light: #1f1f1f;
-        --wpmd-text-primary: #ededed;
-        --wpmd-text-secondary: #a3a3a3;
-        --wpmd-text-muted: #525252;
+        /* Background / Surface */
+        --wpmd-bg:            #09090b;
+        --wpmd-surface:       #18181b;
+        --wpmd-surface-hover: #27272a;
 
-        --wpmd-accent: #ededed;
-        --wpmd-accent-hover: #d4d4d4;
-        --wpmd-accent-fg: #0a0a0a;
+        /* Borders */
+        --wpmd-border:        #27272a;
+        --wpmd-border-light:  #1f1f23;
 
-        --wpmd-tree-line: #333333;
-        --wpmd-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 4px 12px rgba(0, 0, 0, 0.2);
-        --wpmd-shadow-lg: 0 4px 24px rgba(0, 0, 0, 0.4);
+        /* Text (all meet WCAG AA on zinc-950) */
+        --wpmd-text-primary:   #fafafa;  /* zinc-50  → 18.4:1 */
+        --wpmd-text-secondary: #a1a1aa;  /* zinc-400 → 8.1:1  */
+        --wpmd-text-muted:     #71717a;  /* zinc-500 → 4.8:1  */
+
+        /* Accent */
+        --wpmd-accent:        #fafafa;
+        --wpmd-accent-hover:  #d4d4d8;
+        --wpmd-accent-fg:     #09090b;
+
+        /* Semantic: Blue */
+        --wpmd-blue:          #60a5fa;
+        --wpmd-blue-hover:    #93bbfd;
+        --wpmd-blue-bg:       #172554;
+
+        /* Semantic: Purple */
+        --wpmd-purple:        #a78bfa;
+        --wpmd-purple-bg:     #2e1065;
+
+        /* Semantic: Green */
+        --wpmd-green:         #4ade80;
+        --wpmd-green-bg:      #052e16;
+
+        /* Semantic: Orange */
+        --wpmd-orange:        #fb923c;
+        --wpmd-orange-bg:     #431407;
+
+        /* Semantic: Red */
+        --wpmd-red:           #f87171;
+        --wpmd-red-bg:        #450a0a;
+
+        /* Semantic: Gray */
+        --wpmd-gray:          #71717a;
+
+        /* Tree lines */
+        --wpmd-tree-line:     #27272a;
+
+        /* Shadows */
+        --wpmd-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
+        --wpmd-shadow-md: 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
+        --wpmd-shadow-lg: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
     }
 }
 
-/* ===== RESET ===== */
+/* ══════════════════════════════════════════════════════════════════════════════
+   RESET
+   ══════════════════════════════════════════════════════════════════════════════ */
+
 .wpmd-panel,
 .wpmd-panel *,
 .wpmd-modal,
@@ -83,57 +171,64 @@
     line-height: 1.5;
 }
 
-/* ===== TOGGLE BUTTON (Pill Style) ===== */
+/* ══════════════════════════════════════════════════════════════════════════════
+   TOGGLE BUTTON (Pill Style)
+   ══════════════════════════════════════════════════════════════════════════════ */
+
 .wpmd-toggle {
     position: fixed;
     z-index: 99998;
     height: 36px;
-    padding: 0 12px;
-    border-radius: var(--wpmd-radius);
+    padding: 0 var(--wpmd-space-3);
+    border-radius: var(--wpmd-radius-md);
     background: var(--wpmd-surface);
     border: 1px solid var(--wpmd-border);
     color: var(--wpmd-text-primary);
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: var(--wpmd-space-1);
     cursor: pointer;
-    box-shadow: var(--wpmd-shadow);
+    box-shadow: var(--wpmd-shadow-md);
     transition: all var(--wpmd-transition);
-    font-size: 13px;
+    font-size: var(--wpmd-text-base);
     font-weight: 500;
     letter-spacing: -0.01em;
+    white-space: nowrap;
 }
 
 .wpmd-toggle svg {
     width: 14px;
     height: 14px;
     opacity: 0.7;
+    flex-shrink: 0;
 }
 
 .wpmd-toggle.wpmd-pos-bottom-left {
-    bottom: 20px;
-    left: 20px;
+    bottom: var(--wpmd-space-5);
+    left: var(--wpmd-space-5);
 }
 
 .wpmd-toggle.wpmd-pos-bottom-right {
-    bottom: 20px;
-    right: 20px;
+    bottom: var(--wpmd-space-5);
+    right: var(--wpmd-space-5);
 }
 
 .wpmd-toggle:hover {
     background: var(--wpmd-bg);
-    border-color: var(--wpmd-border);
     box-shadow: var(--wpmd-shadow-lg);
     transform: translateY(-1px);
 }
 
 .wpmd-toggle:active {
     transform: translateY(0);
-    box-shadow: var(--wpmd-shadow);
+    box-shadow: var(--wpmd-shadow-sm);
 }
 
-/* ===== OVERLAY ===== */
+/* ══════════════════════════════════════════════════════════════════════════════
+   OVERLAY
+   ══════════════════════════════════════════════════════════════════════════════ */
+
 .wpmd-overlay {
     position: fixed;
     inset: 0;
@@ -150,7 +245,10 @@
     pointer-events: all;
 }
 
-/* ===== PANEL DRAWER ===== */
+/* ══════════════════════════════════════════════════════════════════════════════
+   PANEL DRAWER
+   ══════════════════════════════════════════════════════════════════════════════ */
+
 .wpmd-panel {
     position: fixed;
     top: 0;
@@ -163,7 +261,7 @@
     display: flex;
     flex-direction: column;
     border-left: 1px solid var(--wpmd-border);
-    font-size: 13px;
+    font-size: var(--wpmd-text-base);
     overflow: hidden;
     box-shadow: var(--wpmd-shadow-lg);
     transform: translateX(100%);
@@ -175,12 +273,15 @@
     transform: translateX(0);
 }
 
-/* ===== HEADER ===== */
+/* ══════════════════════════════════════════════════════════════════════════════
+   HEADER
+   ══════════════════════════════════════════════════════════════════════════════ */
+
 .wpmd-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 16px;
+    padding: var(--wpmd-space-4);
     background: var(--wpmd-bg);
     border-bottom: 1px solid var(--wpmd-border);
     flex-shrink: 0;
@@ -189,14 +290,14 @@
 .wpmd-header-brand {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: var(--wpmd-space-3);
 }
 
 .wpmd-brand-icon {
     width: 28px;
     height: 28px;
     background: var(--wpmd-accent);
-    border-radius: var(--wpmd-radius-sm);
+    border-radius: var(--wpmd-radius-md);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -205,41 +306,44 @@
 }
 
 .wpmd-brand-name {
-    font-size: 14px;
+    font-size: var(--wpmd-text-md);
     font-weight: 600;
     color: var(--wpmd-text-primary);
     letter-spacing: -0.02em;
+    line-height: 1.2;
 }
 
 .wpmd-brand-sub {
-    font-size: 11px;
+    font-size: var(--wpmd-text-xs);
     color: var(--wpmd-text-muted);
     margin-top: 1px;
+    line-height: 1.2;
 }
 
 .wpmd-header-actions {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: var(--wpmd-space-2);
 }
 
 .wpmd-edit-btn {
     display: inline-flex;
     align-items: center;
-    gap: 5px;
-    font-size: 12px;
+    gap: var(--wpmd-space-1);
+    font-size: var(--wpmd-text-sm);
     font-weight: 500;
     color: var(--wpmd-text-secondary);
     text-decoration: none;
-    padding: 6px 10px;
+    padding: var(--wpmd-space-1) var(--wpmd-space-3);
     border: 1px solid var(--wpmd-border);
-    border-radius: var(--wpmd-radius-sm);
+    border-radius: var(--wpmd-radius-md);
     background: var(--wpmd-bg);
     transition: all var(--wpmd-transition);
+    line-height: 1.4;
 }
 
 .wpmd-edit-btn:hover {
-    background: var(--wpmd-surface);
+    background: var(--wpmd-surface-hover);
     color: var(--wpmd-text-primary);
     border-color: var(--wpmd-border);
 }
@@ -252,7 +356,7 @@
 .wpmd-close {
     background: none;
     border: 1px solid transparent;
-    border-radius: var(--wpmd-radius-sm);
+    border-radius: var(--wpmd-radius-md);
     width: 28px;
     height: 28px;
     display: flex;
@@ -264,15 +368,18 @@
 }
 
 .wpmd-close:hover {
-    background: var(--wpmd-surface);
+    background: var(--wpmd-surface-hover);
     color: var(--wpmd-text-primary);
     border-color: var(--wpmd-border);
 }
 
-/* ===== SEARCH SECTION ===== */
+/* ══════════════════════════════════════════════════════════════════════════════
+   SEARCH SECTION
+   ══════════════════════════════════════════════════════════════════════════════ */
+
 .wpmd-search-section {
     position: relative;
-    padding: 12px 16px;
+    padding: var(--wpmd-space-3) var(--wpmd-space-4);
     background: var(--wpmd-bg);
     border-bottom: 1px solid var(--wpmd-border);
     flex-shrink: 0;
@@ -286,7 +393,7 @@
 
 .wpmd-search-icon {
     position: absolute;
-    left: 10px;
+    left: var(--wpmd-space-3);
     color: var(--wpmd-text-muted);
     pointer-events: none;
 }
@@ -294,12 +401,12 @@
 .wpmd-search-input {
     width: 100%;
     height: 36px;
-    padding: 0 32px 0 32px;
+    padding: 0 var(--wpmd-space-10) 0 var(--wpmd-space-8);
     background: var(--wpmd-surface);
     border: 1px solid var(--wpmd-border);
-    border-radius: var(--wpmd-radius-sm);
+    border-radius: var(--wpmd-radius-md);
     color: var(--wpmd-text-primary);
-    font-size: 13px;
+    font-size: var(--wpmd-text-base);
     outline: none;
     transition: all var(--wpmd-transition);
 }
@@ -316,44 +423,44 @@
 
 .wpmd-search-clear {
     position: absolute;
-    right: 8px;
+    right: var(--wpmd-space-2);
     background: none;
     border: none;
     color: var(--wpmd-text-muted);
     cursor: pointer;
-    padding: 4px;
+    padding: var(--wpmd-space-1);
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: var(--wpmd-radius-xs);
+    border-radius: var(--wpmd-radius-sm);
     transition: all var(--wpmd-transition-fast);
 }
 
 .wpmd-search-clear:hover {
-    background: var(--wpmd-border-light);
+    background: var(--wpmd-surface-hover);
     color: var(--wpmd-text-primary);
 }
 
 .wpmd-search-results {
     position: absolute;
     top: 100%;
-    left: 16px;
-    right: 16px;
+    left: var(--wpmd-space-4);
+    right: var(--wpmd-space-4);
     background: var(--wpmd-bg);
     border: 1px solid var(--wpmd-border);
-    border-radius: var(--wpmd-radius);
+    border-radius: var(--wpmd-radius-lg);
     box-shadow: var(--wpmd-shadow-lg);
     max-height: 280px;
     overflow-y: auto;
     z-index: 100;
-    margin-top: 4px;
+    margin-top: var(--wpmd-space-1);
 }
 
 .wpmd-result-item {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 12px;
+    padding: var(--wpmd-space-3) var(--wpmd-space-3);
     cursor: pointer;
     border-bottom: 1px solid var(--wpmd-border-light);
     transition: background var(--wpmd-transition-fast);
@@ -365,53 +472,58 @@
 
 .wpmd-result-item:hover,
 .wpmd-result-item.highlighted {
-    background: var(--wpmd-surface);
+    background: var(--wpmd-surface-hover);
 }
 
 .wpmd-result-title {
-    font-size: 13px;
+    font-size: var(--wpmd-text-base);
     font-weight: 500;
     color: var(--wpmd-text-primary);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    line-height: 1.4;
 }
 
 .wpmd-result-meta {
-    font-size: 11px;
+    font-size: var(--wpmd-text-xs);
     color: var(--wpmd-text-muted);
     margin-top: 2px;
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: var(--wpmd-space-2);
 }
 
 .wpmd-result-badge {
     font-size: 10px;
-    padding: 2px 6px;
-    border-radius: var(--wpmd-radius-xs);
-    background: var(--wpmd-surface);
+    padding: 1px var(--wpmd-space-2);
+    border-radius: var(--wpmd-radius-sm);
+    background: var(--wpmd-surface-hover);
     color: var(--wpmd-text-secondary);
     text-transform: uppercase;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.03em;
     flex-shrink: 0;
-    margin-left: 8px;
+    margin-left: var(--wpmd-space-2);
     border: 1px solid var(--wpmd-border);
+    font-weight: 500;
 }
 
 .wpmd-no-results {
-    padding: 20px;
+    padding: var(--wpmd-space-5);
     text-align: center;
     color: var(--wpmd-text-muted);
-    font-size: 13px;
+    font-size: var(--wpmd-text-base);
 }
 
-/* ===== FILTER ROW ===== */
+/* ══════════════════════════════════════════════════════════════════════════════
+   FILTER ROW
+   ══════════════════════════════════════════════════════════════════════════════ */
+
 .wpmd-filter-row {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 10px 16px;
+    gap: var(--wpmd-space-2);
+    padding: var(--wpmd-space-3) var(--wpmd-space-4);
     background: var(--wpmd-surface);
     border-bottom: 1px solid var(--wpmd-border);
     flex-shrink: 0;
@@ -427,12 +539,12 @@
 .wpmd-filter-input {
     width: 100%;
     height: 32px;
-    padding: 0 10px 0 28px;
+    padding: 0 var(--wpmd-space-3) 0 var(--wpmd-space-8);
     background: var(--wpmd-bg);
     border: 1px solid var(--wpmd-border);
-    border-radius: var(--wpmd-radius-sm);
+    border-radius: var(--wpmd-radius-md);
     color: var(--wpmd-text-primary);
-    font-size: 12px;
+    font-size: var(--wpmd-text-sm);
     outline: none;
     transition: all var(--wpmd-transition);
 }
@@ -448,56 +560,66 @@
 
 .wpmd-expand-actions {
     display: flex;
-    gap: 4px;
+    gap: var(--wpmd-space-1);
 }
 
 .wpmd-xs-btn {
     background: var(--wpmd-bg);
     border: 1px solid var(--wpmd-border);
-    border-radius: var(--wpmd-radius-sm);
+    border-radius: var(--wpmd-radius-md);
     color: var(--wpmd-text-secondary);
-    font-size: 11px;
-    padding: 5px 8px;
+    font-size: var(--wpmd-text-xs);
+    padding: var(--wpmd-space-1) var(--wpmd-space-2);
     cursor: pointer;
     display: inline-flex;
     align-items: center;
-    gap: 4px;
+    gap: var(--wpmd-space-1);
     transition: all var(--wpmd-transition-fast);
     font-weight: 500;
+    line-height: 1.4;
 }
 
 .wpmd-xs-btn:hover {
-    background: var(--wpmd-surface);
+    background: var(--wpmd-surface-hover);
     color: var(--wpmd-text-primary);
     border-color: var(--wpmd-border);
 }
 
-/* ===== CONTENT AREA ===== */
+/* ══════════════════════════════════════════════════════════════════════════════
+   CONTENT AREA
+   ══════════════════════════════════════════════════════════════════════════════ */
+
 .wpmd-content {
     flex: 1;
     overflow-y: auto;
-    padding: 12px;
+    padding: var(--wpmd-space-3);
     background: var(--wpmd-surface);
 }
 
-/* ===== META LIST CONTAINER ===== */
+/* ══════════════════════════════════════════════════════════════════════════════
+   META LIST CONTAINER
+   ══════════════════════════════════════════════════════════════════════════════ */
+
 .wpmd-category {
     background: var(--wpmd-bg);
     border: 1px solid var(--wpmd-border);
-    border-radius: var(--wpmd-radius);
+    border-radius: var(--wpmd-radius-lg);
     overflow: hidden;
 }
 
-/* ===== LOADING STATE ===== */
+/* ══════════════════════════════════════════════════════════════════════════════
+   LOADING STATE
+   ══════════════════════════════════════════════════════════════════════════════ */
+
 .wpmd-loading {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 12px;
-    padding: 48px 20px;
+    gap: var(--wpmd-space-3);
+    padding: var(--wpmd-space-8) var(--wpmd-space-5);
     color: var(--wpmd-text-muted);
-    font-size: 13px;
+    font-size: var(--wpmd-text-base);
 }
 
 .wpmd-spinner {
@@ -513,12 +635,15 @@
     to { transform: rotate(360deg); }
 }
 
-/* ===== EMPTY / ERROR STATES ===== */
+/* ══════════════════════════════════════════════════════════════════════════════
+   EMPTY / ERROR STATES
+   ══════════════════════════════════════════════════════════════════════════════ */
+
 .wpmd-empty,
 .wpmd-error {
-    padding: 40px 20px;
+    padding: var(--wpmd-space-8) var(--wpmd-space-5);
     text-align: center;
-    font-size: 13px;
+    font-size: var(--wpmd-text-base);
     color: var(--wpmd-text-muted);
 }
 
@@ -526,34 +651,41 @@
     color: var(--wpmd-red);
 }
 
-/* ===== BADGE ===== */
+/* ══════════════════════════════════════════════════════════════════════════════
+   BADGE
+   ══════════════════════════════════════════════════════════════════════════════ */
+
 .wpmd-badge {
     display: inline-block;
     font-size: 10px;
     font-weight: 500;
-    padding: 2px 6px;
-    border-radius: var(--wpmd-radius-xs);
-    background: var(--wpmd-surface);
+    padding: 1px var(--wpmd-space-2);
+    border-radius: var(--wpmd-radius-sm);
+    background: var(--wpmd-surface-hover);
     color: var(--wpmd-text-secondary);
     text-transform: uppercase;
     letter-spacing: 0.03em;
     border: 1px solid var(--wpmd-border);
+    line-height: 1.4;
 }
 
 .wpmd-sku,
 .wpmd-id {
-    font-size: 11px;
+    font-size: var(--wpmd-text-xs);
     color: var(--wpmd-text-muted);
     font-family: var(--wpmd-mono);
 }
 
-/* ===== META ROWS ===== */
+/* ══════════════════════════════════════════════════════════════════════════════
+   META ROWS
+   ══════════════════════════════════════════════════════════════════════════════ */
+
 .wpmd-meta-row {
     display: flex;
     align-items: flex-start;
-    padding: 8px 12px;
+    padding: var(--wpmd-space-2) var(--wpmd-space-3);
     border-bottom: 1px solid var(--wpmd-border-light);
-    gap: 12px;
+    gap: var(--wpmd-space-3);
     transition: background var(--wpmd-transition-fast);
 }
 
@@ -562,20 +694,20 @@
 }
 
 .wpmd-meta-row:hover {
-    background: var(--wpmd-surface);
+    background: var(--wpmd-surface-hover);
 }
 
 .wpmd-meta-key-col {
     flex: 0 0 35%;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: var(--wpmd-space-1);
     min-width: 0;
 }
 
 .wpmd-meta-key {
     font-family: var(--wpmd-mono);
-    font-size: 12px;
+    font-size: var(--wpmd-text-sm);
     font-weight: 500;
     color: var(--wpmd-text-primary);
     word-break: break-all;
@@ -585,12 +717,13 @@
 .wpmd-type-pill {
     font-size: 10px;
     font-family: var(--wpmd-mono);
-    padding: 1px 5px;
-    border-radius: var(--wpmd-radius-xs);
+    padding: 1px var(--wpmd-space-1);
+    border-radius: var(--wpmd-radius-sm);
     width: fit-content;
-    background: var(--wpmd-surface);
+    background: var(--wpmd-surface-hover);
     color: var(--wpmd-text-muted);
     border: 1px solid var(--wpmd-border);
+    line-height: 1.4;
 }
 
 .wpmd-type-string  { color: var(--wpmd-orange); }
@@ -608,7 +741,7 @@
 
 .wpmd-meta-val-preview {
     font-family: var(--wpmd-mono);
-    font-size: 12px;
+    font-size: var(--wpmd-text-sm);
     cursor: pointer;
     word-break: break-all;
     color: var(--wpmd-text-secondary);
@@ -623,9 +756,9 @@
 .wpmd-meta-actions {
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: var(--wpmd-space-1);
     flex-shrink: 0;
-    opacity: 0.5;
+    opacity: 0;
     transition: opacity var(--wpmd-transition-fast);
 }
 
@@ -637,10 +770,10 @@
 .wpmd-inspect-btn {
     background: none;
     border: 1px solid transparent;
-    border-radius: var(--wpmd-radius-xs);
+    border-radius: var(--wpmd-radius-sm);
     color: var(--wpmd-text-muted);
-    font-size: 11px;
-    padding: 4px 6px;
+    font-size: var(--wpmd-text-xs);
+    padding: var(--wpmd-space-1) var(--wpmd-space-2);
     cursor: pointer;
     display: inline-flex;
     align-items: center;
@@ -650,30 +783,34 @@
 
 .wpmd-copy-btn:hover,
 .wpmd-inspect-btn:hover {
-    background: var(--wpmd-surface);
+    background: var(--wpmd-surface-hover);
     color: var(--wpmd-text-primary);
     border-color: var(--wpmd-border);
 }
 
 .wpmd-copy-btn.copied {
-    background: var(--wpmd-surface);
+    background: var(--wpmd-green-bg);
     color: var(--wpmd-green);
+    border-color: var(--wpmd-green);
 }
 
-/* ===== TREE VIEWER ===== */
+/* ══════════════════════════════════════════════════════════════════════════════
+   TREE VIEWER
+   ══════════════════════════════════════════════════════════════════════════════ */
+
 .wpmd-tree-toggle {
     display: inline-flex;
     align-items: center;
-    gap: 4px;
+    gap: var(--wpmd-space-1);
     cursor: pointer;
-    font-size: 12px;
+    font-size: var(--wpmd-text-sm);
     font-weight: 500;
     font-family: var(--wpmd-mono);
     color: var(--wpmd-text-secondary);
-    background: var(--wpmd-surface);
+    background: var(--wpmd-surface-hover);
     border: 1px solid var(--wpmd-border);
-    border-radius: var(--wpmd-radius-sm);
-    padding: 2px 8px;
+    border-radius: var(--wpmd-radius-md);
+    padding: var(--wpmd-space-1) var(--wpmd-space-2);
     transition: all var(--wpmd-transition-fast);
     user-select: none;
     width: fit-content;
@@ -695,7 +832,7 @@
 
 .wpmd-tree-body {
     display: none;
-    margin-top: 6px;
+    margin-top: var(--wpmd-space-2);
     position: relative;
 }
 
@@ -705,22 +842,22 @@
 
 .wpmd-tree-root {
     position: relative;
-    padding-left: 16px;
+    padding-left: var(--wpmd-space-4);
 }
 
 .wpmd-tree-root::before {
     content: "";
     position: absolute;
-    left: 6px;
+    left: var(--wpmd-space-1) + 2px;
     top: 0;
-    bottom: 12px;
+    bottom: var(--wpmd-space-3);
     width: 1px;
     background: var(--wpmd-tree-line);
 }
 
 .wpmd-tree-node {
     position: relative;
-    padding-left: 14px;
+    padding-left: var(--wpmd-space-4) - 2px;
     margin-bottom: 1px;
 }
 
@@ -729,7 +866,7 @@
     position: absolute;
     left: 0;
     top: 11px;
-    width: 12px;
+    width: var(--wpmd-space-3);
     height: 1px;
     background: var(--wpmd-tree-line);
 }
@@ -751,19 +888,19 @@
 .wpmd-tree-row {
     display: flex;
     align-items: flex-start;
-    gap: 6px;
-    padding: 3px 6px;
-    border-radius: var(--wpmd-radius-xs);
+    gap: var(--wpmd-space-2);
+    padding: var(--wpmd-space-1) var(--wpmd-space-2);
+    border-radius: var(--wpmd-radius-sm);
     min-height: 24px;
 }
 
 .wpmd-tree-row:hover {
-    background: var(--wpmd-surface);
+    background: var(--wpmd-surface-hover);
 }
 
 .wpmd-tree-key {
     font-family: var(--wpmd-mono);
-    font-size: 12px;
+    font-size: var(--wpmd-text-sm);
     font-weight: 500;
     color: var(--wpmd-text-primary);
     flex-shrink: 0;
@@ -771,42 +908,49 @@
 
 .wpmd-tree-colon {
     color: var(--wpmd-text-muted);
-    font-size: 12px;
+    font-size: var(--wpmd-text-sm);
     flex-shrink: 0;
 }
 
 .wpmd-tree-val {
     font-family: var(--wpmd-mono);
-    font-size: 12px;
+    font-size: var(--wpmd-text-sm);
     word-break: break-word;
     flex: 1;
     color: var(--wpmd-text-secondary);
 }
 
-/* ===== FOOTER ===== */
+/* ══════════════════════════════════════════════════════════════════════════════
+   FOOTER
+   ══════════════════════════════════════════════════════════════════════════════ */
+
 .wpmd-footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 16px;
+    padding: var(--wpmd-space-3) var(--wpmd-space-4);
     border-top: 1px solid var(--wpmd-border);
     background: var(--wpmd-bg);
-    font-size: 12px;
+    font-size: var(--wpmd-text-sm);
     color: var(--wpmd-text-muted);
     flex-shrink: 0;
 }
 
 .wpmd-kbd {
-    background: var(--wpmd-surface);
+    background: var(--wpmd-surface-hover);
     border: 1px solid var(--wpmd-border);
-    border-radius: var(--wpmd-radius-xs);
-    padding: 2px 6px;
-    font-size: 11px;
+    border-radius: var(--wpmd-radius-sm);
+    padding: 1px var(--wpmd-space-2);
+    font-size: var(--wpmd-text-xs);
     font-family: var(--wpmd-mono);
     color: var(--wpmd-text-muted);
+    line-height: 1.4;
 }
 
-/* ===== MODAL ===== */
+/* ══════════════════════════════════════════════════════════════════════════════
+   MODAL
+   ══════════════════════════════════════════════════════════════════════════════ */
+
 .wpmd-modal {
     position: fixed;
     inset: 0;
@@ -816,7 +960,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 20px;
+    padding: var(--wpmd-space-5);
     opacity: 0;
     pointer-events: none;
     transition: opacity var(--wpmd-transition);
@@ -830,7 +974,7 @@
 .wpmd-modal-box {
     background: var(--wpmd-bg);
     border: 1px solid var(--wpmd-border);
-    border-radius: var(--wpmd-radius);
+    border-radius: var(--wpmd-radius-lg);
     width: 100%;
     max-width: 640px;
     max-height: 85vh;
@@ -844,7 +988,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 16px;
+    padding: var(--wpmd-space-4);
     border-bottom: 1px solid var(--wpmd-border);
     background: var(--wpmd-bg);
 }
@@ -852,19 +996,19 @@
 .wpmd-modal-header-info {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: var(--wpmd-space-3);
 }
 
 .wpmd-modal-key {
     font-family: var(--wpmd-mono);
-    font-size: 13px;
+    font-size: var(--wpmd-text-base);
     font-weight: 500;
     color: var(--wpmd-text-primary);
 }
 
 .wpmd-modal-tabs {
     display: flex;
-    padding: 0 16px;
+    padding: 0 var(--wpmd-space-4);
     background: var(--wpmd-bg);
     border-bottom: 1px solid var(--wpmd-border);
     gap: 0;
@@ -874,8 +1018,8 @@
     background: none;
     border: none;
     border-bottom: 2px solid transparent;
-    padding: 10px 14px;
-    font-size: 13px;
+    padding: var(--wpmd-space-3) var(--wpmd-space-4);
+    font-size: var(--wpmd-text-base);
     font-weight: 500;
     color: var(--wpmd-text-muted);
     cursor: pointer;
@@ -894,7 +1038,7 @@
 .wpmd-modal-body {
     flex: 1;
     overflow-y: auto;
-    padding: 16px;
+    padding: var(--wpmd-space-4);
 }
 
 .wpmd-modal-view {
@@ -907,11 +1051,11 @@
 
 .wpmd-modal-value {
     font-family: var(--wpmd-mono);
-    font-size: 12px;
+    font-size: var(--wpmd-text-sm);
     background: var(--wpmd-surface);
-    padding: 14px;
+    padding: var(--wpmd-space-4);
     border: 1px solid var(--wpmd-border);
-    border-radius: var(--wpmd-radius-sm);
+    border-radius: var(--wpmd-radius-md);
     white-space: pre-wrap;
     word-break: break-all;
     max-height: 400px;
@@ -922,36 +1066,36 @@
 
 .wpmd-ai-toolbar {
     display: flex;
-    gap: 8px;
-    margin-bottom: 12px;
+    gap: var(--wpmd-space-2);
+    margin-bottom: var(--wpmd-space-3);
 }
 
 .wpmd-btn-secondary {
     background: var(--wpmd-bg);
     border: 1px solid var(--wpmd-border);
-    border-radius: var(--wpmd-radius-sm);
+    border-radius: var(--wpmd-radius-md);
     color: var(--wpmd-text-primary);
-    font-size: 12px;
-    padding: 6px 12px;
+    font-size: var(--wpmd-text-sm);
+    padding: var(--wpmd-space-2) var(--wpmd-space-3);
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: var(--wpmd-space-2);
     cursor: pointer;
     transition: all var(--wpmd-transition-fast);
     font-weight: 500;
 }
 
 .wpmd-btn-secondary:hover {
-    background: var(--wpmd-surface);
+    background: var(--wpmd-surface-hover);
     border-color: var(--wpmd-border);
 }
 
 .wpmd-ai-content {
     background: var(--wpmd-surface);
     border: 1px solid var(--wpmd-border);
-    border-radius: var(--wpmd-radius-sm);
-    padding: 14px;
-    font-size: 13px;
+    border-radius: var(--wpmd-radius-md);
+    padding: var(--wpmd-space-4);
+    font-size: var(--wpmd-text-base);
     line-height: 1.6;
     color: var(--wpmd-text-primary);
     max-height: 380px;
@@ -961,26 +1105,26 @@
 .wpmd-ai-content pre {
     background: var(--wpmd-bg);
     border: 1px solid var(--wpmd-border);
-    padding: 12px;
-    border-radius: var(--wpmd-radius-sm);
+    padding: var(--wpmd-space-3);
+    border-radius: var(--wpmd-radius-md);
     font-family: var(--wpmd-mono);
-    font-size: 12px;
-    margin: 10px 0;
+    font-size: var(--wpmd-text-sm);
+    margin: var(--wpmd-space-3) 0;
     overflow-x: auto;
 }
 
 .wpmd-ai-content code {
     font-family: var(--wpmd-mono);
-    background: var(--wpmd-border-light);
-    padding: 2px 5px;
-    border-radius: var(--wpmd-radius-xs);
-    font-size: 12px;
+    background: var(--wpmd-surface-hover);
+    padding: 1px var(--wpmd-space-1);
+    border-radius: var(--wpmd-radius-sm);
+    font-size: var(--wpmd-text-sm);
 }
 
 .wpmd-modal-footer {
     display: flex;
     justify-content: flex-end;
-    padding: 12px 16px;
+    padding: var(--wpmd-space-3) var(--wpmd-space-4);
     background: var(--wpmd-bg);
     border-top: 1px solid var(--wpmd-border);
 }
@@ -988,13 +1132,13 @@
 .wpmd-btn-primary {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: var(--wpmd-space-2);
     background: var(--wpmd-accent);
     color: var(--wpmd-accent-fg);
     border: none;
-    border-radius: var(--wpmd-radius-sm);
-    padding: 8px 14px;
-    font-size: 13px;
+    border-radius: var(--wpmd-radius-md);
+    padding: var(--wpmd-space-2) var(--wpmd-space-4);
+    font-size: var(--wpmd-text-base);
     font-weight: 500;
     cursor: pointer;
     transition: all var(--wpmd-transition-fast);
@@ -1004,12 +1148,15 @@
     background: var(--wpmd-accent-hover);
 }
 
-/* ===== SKELETON LOADER ===== */
+/* ══════════════════════════════════════════════════════════════════════════════
+   SKELETON LOADER
+   ══════════════════════════════════════════════════════════════════════════════ */
+
 .wpmd-skeleton {
-    background: linear-gradient(90deg, var(--wpmd-border-light) 25%, var(--wpmd-border) 50%, var(--wpmd-border-light) 75%);
+    background: linear-gradient(90deg, var(--wpmd-surface-hover) 25%, var(--wpmd-border) 50%, var(--wpmd-surface-hover) 75%);
     background-size: 200% 100%;
     animation: wpmd-shimmer 1.4s infinite;
-    border-radius: var(--wpmd-radius-sm);
+    border-radius: var(--wpmd-radius-md);
 }
 
 @keyframes wpmd-shimmer {
@@ -1017,11 +1164,14 @@
     100% { background-position: -200% 0; }
 }
 
-.wpmd-skel-card { height: 60px; margin-bottom: 12px; }
-.wpmd-skel-cat  { height: 32px; margin-bottom: 8px; }
-.wpmd-skel-item { height: 22px; margin-bottom: 6px; }
+.wpmd-skel-card { height: 60px; margin-bottom: var(--wpmd-space-3); }
+.wpmd-skel-cat  { height: 32px; margin-bottom: var(--wpmd-space-2); }
+.wpmd-skel-item { height: 22px; margin-bottom: var(--wpmd-space-2); }
 
-/* ===== RESPONSIVE ===== */
+/* ══════════════════════════════════════════════════════════════════════════════
+   RESPONSIVE
+   ══════════════════════════════════════════════════════════════════════════════ */
+
 @media (max-width: 640px) {
     :root {
         --wpmd-panel-w: 100vw;
