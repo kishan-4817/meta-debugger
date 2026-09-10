@@ -1,0 +1,35 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Product Meta Debugger 1.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-10 18:00+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.0\n"
+"X-Domain: meta-debugger\n"
+
+#: views/drawer.php:12
+msgid "Meta Debugger"
+msgstr ""
+
+#: views/drawer.php:13
+msgid "WooCommerce Inspector"
+msgstr ""
+
+#: views/drawer.php:19
+msgid "Edit in wp-admin"
+msgstr ""
+
+#: views/drawer.php:23
+msgid "Close Meta Debugger"
+msgstr ""
+
+#: views/drawer.php:32
+msgid "Search by name, ID or SKU…"
+msgstr ""

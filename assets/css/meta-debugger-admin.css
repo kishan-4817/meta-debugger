@@ -1,0 +1,66 @@
+/**
+ * Product Meta Debugger - Admin Settings Stylesheet
+ *
+ * @package ProductMetaDebugger
+ */
+
+.wpmd-settings-wrap {
+    max-width: 900px;
+    margin-top: 20px;
+}
+
+.wpmd-card {
+    background: #fff;
+    border: 1px solid #ccd0d4;
+    border-radius: 6px;
+    padding: 20px 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.04);
+}
+
+.wpmd-card h2 {
+    margin-top: 0;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #f0f0f1;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.wpmd-ai-card {
+    border-left: 4px solid #f97316;
+    position: relative;
+}
+
+.wpmd-ai-badge {
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: #fff7ed;
+    color: #c2410c;
+    border: 1px solid #fed7aa;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.wpmd-ai-badge .dashicons {
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+}
+
+#wpmd-test-result.success {
+    color: #15803d;
+}
+
+#wpmd-test-result.error {
+    color: #dc2626;
+}
+
+#wpmd-test-result.loading {
+    color: #6b7280;
+}

@@ -1,0 +1,15 @@
+{
+  "name": "meta-debugger",
+  "version": "1.1.0",
+  "description": "Inspect WordPress post meta, custom post types, WooCommerce fields, and ACF data with a sleek slide-out tree viewer and instant search.",
+  "main": "assets/js/meta-debugger.js",
+  "license": "GPL-2.0-or-later",
+  "scripts": {
+    "lint:js": "wp-scripts lint-js assets/js",
+    "lint:css": "wp-scripts lint-style assets/css",
+    "format": "wp-scripts format assets/js assets/css"
+  },
+  "devDependencies": {
+    "@wordpress/scripts": "^27.0.0"
+  }
+}

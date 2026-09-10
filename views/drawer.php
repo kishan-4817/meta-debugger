@@ -1,0 +1,94 @@
+<?php
+/**
+ * Slide-out debugger drawer template.
+ *
+ * @package MetaDebugger
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
+
+$trigger_pos = isset( $trigger_position ) ? $trigger_position : 'bottom-left';
+?>
+
+<?php if ( 'none' !== $trigger_pos ) : ?>
+    <!-- MetaDebugger: Toggle Button -->
+    <button id="wpmd-toggle" class="wpmd-toggle wpmd-pos-<?php echo esc_attr( $trigger_pos ); ?>" title="<?php esc_attr_e( 'Meta Debugger (Ctrl+Shift+D)', 'meta-debugger' ); ?>" aria-label="<?php esc_attr_e( 'Open Meta Debugger', 'meta-debugger' ); ?>">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"/>
+            <path d="M7 14h.01"/><path d="M17 14h.01"/>
+        </svg>
+    </button>
+<?php endif; ?>
+
+<div id="wpmd-overlay" class="wpmd-overlay" aria-hidden="true"></div>
+
+<aside id="wpmd-panel" class="wpmd-panel" role="complementary" aria-label="<?php esc_attr_e( 'Meta Debugger', 'meta-debugger' ); ?>" aria-hidden="true">
+
+    <!-- HEADER -->
+    <header class="wpmd-header">
+        <div class="wpmd-header-brand">
+            <div class="wpmd-brand-icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+                </svg>
+            </div>
+            <div>
+                <p class="wpmd-brand-name"><?php esc_html_e( 'Meta Debugger', 'meta-debugger' ); ?></p>
+                <p class="wpmd-brand-sub"><?php esc_html_e( 'WordPress Post Meta & ACF Inspector', 'meta-debugger' ); ?></p>
+            </div>
+        </div>
+        <div class="wpmd-header-actions">
+            <a id="wpmd-edit-link" class="wpmd-edit-btn" href="#" target="_blank" rel="noopener noreferrer" title="<?php esc_attr_e( 'Edit in wp-admin', 'meta-debugger' ); ?>">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                <?php esc_html_e( 'Edit', 'meta-debugger' ); ?>
+            </a>
+            <button class="wpmd-close" aria-label="<?php esc_attr_e( 'Close Meta Debugger', 'meta-debugger' ); ?>">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- SEARCH BAR -->
+    <div class="wpmd-search-section">
+        <div class="wpmd-search-wrap">
+            <svg class="wpmd-search-icon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <input type="search" id="wpmd-search" class="wpmd-search-input" placeholder="<?php esc_attr_e( 'Search posts, pages, products by title, ID or SKU…', 'meta-debugger' ); ?>" autocomplete="off" aria-label="<?php esc_attr_e( 'Search items', 'meta-debugger' ); ?>" aria-autocomplete="list" aria-controls="wpmd-search-results" role="combobox" aria-expanded="false">
+            <button id="wpmd-search-clear" class="wpmd-search-clear" aria-label="<?php esc_attr_e( 'Clear search', 'meta-debugger' ); ?>" hidden>
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+        </div>
+        <div id="wpmd-search-results" class="wpmd-search-results" role="listbox" aria-label="<?php esc_attr_e( 'Item search results', 'meta-debugger' ); ?>" hidden></div>
+    </div>
+
+    <!-- ITEM CARD -->
+    <div id="wpmd-product-card" class="wpmd-product-card" hidden></div>
+
+    <!-- META FILTER & CONTROLS -->
+    <div class="wpmd-filter-row">
+        <div class="wpmd-filter-wrap">
+            <svg class="wpmd-search-icon" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 3H2l8 9.46V19l4 2v-8.54z"/></svg>
+            <input type="search" id="wpmd-meta-filter" class="wpmd-filter-input" placeholder="<?php esc_attr_e( 'Filter keys or values…', 'meta-debugger' ); ?>" autocomplete="off" aria-label="<?php esc_attr_e( 'Filter meta keys and values', 'meta-debugger' ); ?>">
+        </div>
+        <div class="wpmd-expand-actions">
+            <button id="wpmd-expand-all" class="wpmd-xs-btn" aria-label="<?php esc_attr_e( 'Expand all nodes', 'meta-debugger' ); ?>" title="<?php esc_attr_e( 'Expand all nodes', 'meta-debugger' ); ?>">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="7 13 12 18 17 13"/><polyline points="7 6 12 11 17 6"/></svg>
+                <?php esc_html_e( 'All', 'meta-debugger' ); ?>
+            </button>
+            <button id="wpmd-collapse-all" class="wpmd-xs-btn" aria-label="<?php esc_attr_e( 'Collapse all nodes', 'meta-debugger' ); ?>" title="<?php esc_attr_e( 'Collapse all nodes', 'meta-debugger' ); ?>">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="7 11 12 6 17 11"/><polyline points="7 18 12 13 17 18"/></svg>
+                <?php esc_html_e( 'None', 'meta-debugger' ); ?>
+            </button>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT AREA -->
+    <div id="wpmd-content" class="wpmd-content" role="region" aria-label="<?php esc_attr_e( 'Metadata tree', 'meta-debugger' ); ?>" aria-live="polite"></div>
+
+    <!-- STATUS BAR -->
+    <footer class="wpmd-footer" role="status" aria-live="polite">
+        <span id="wpmd-status"><?php esc_html_e( 'Ready · Ctrl+Shift+D to toggle', 'meta-debugger' ); ?></span>
+        <span class="wpmd-kbd">⌃⇧D</span>
+    </footer>
+</aside>
