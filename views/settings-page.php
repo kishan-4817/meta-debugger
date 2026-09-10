@@ -32,7 +32,7 @@ $delete_data   = ! empty( $settings['delete_data_on_uninstall'] );
     </div>
 
     <form method="post" action="options.php" class="wpmd-settings-form">
-        <?php settings_fields( 'metadebug_settings_group' ); ?>
+        <?php settings_fields( 'wpmd_settings_group' ); ?>
 
         <div class="wpmd-card">
             <h2><?php esc_html_e( 'Display & Access Settings', 'meta-debugger' ); ?></h2>

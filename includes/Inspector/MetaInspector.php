@@ -127,7 +127,7 @@ class MetaInspector {
                 'sku'      => $sku,
                 'type'     => $post->post_type,
                 'status'   => $post->post_status,
-                'edit_url' => get_edit_post_link( $id, 'raw' ),
+                'edit_url' => get_edit_post_link( $id, 'display' ),
             ];
         }
 

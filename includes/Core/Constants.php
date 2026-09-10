@@ -16,9 +16,9 @@ defined( 'ABSPATH' ) || exit;
  */
 final class Constants {
 
-    public const OPTION_KEY = 'metadebug_settings';
-    public const NONCE_ACTION = 'metadebug_nonce';
-    public const ADMIN_NONCE_ACTION = 'metadebug_admin_nonce';
+    public const OPTION_KEY = 'wpmd_settings';
+    public const NONCE_ACTION = 'wpmd_nonce';
+    public const ADMIN_NONCE_ACTION = 'wpmd_admin_nonce';
 
     /**
      * Default plugin options array.

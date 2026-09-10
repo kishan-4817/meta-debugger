@@ -51,8 +51,6 @@ class AjaxController {
     public function register_hooks(): void {
         add_action( 'wp_ajax_wpmd_search', [ $this, 'handle_search' ] );
         add_action( 'wp_ajax_wpmd_fetch', [ $this, 'handle_fetch' ] );
-        add_action( 'wp_ajax_metadebug_search', [ $this, 'handle_search' ] );
-        add_action( 'wp_ajax_metadebug_fetch', [ $this, 'handle_fetch' ] );
     }
 
     /**

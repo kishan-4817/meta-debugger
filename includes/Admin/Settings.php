@@ -63,7 +63,7 @@ class Settings {
      * Register settings and fields via WordPress Settings API.
      */
     public function register_settings(): void {
-        register_setting( 'metadebug_settings_group', Constants::OPTION_KEY, [
+        register_setting( 'wpmd_settings_group', Constants::OPTION_KEY, [
             'sanitize_callback' => [ $this, 'sanitize_settings' ],
         ] );
     }
@@ -106,6 +106,6 @@ class Settings {
         }
 
         $settings = get_option( Constants::OPTION_KEY, Constants::get_defaults() );
-        include METADEBUG_PATH . 'views/settings-page.php';
+        include WPMD_PLUGIN_DIR . 'views/settings-page.php';
     }
 }

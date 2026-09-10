@@ -22,22 +22,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // ── CONSTANTS ────────────────────────────────────────────────────────────────
 
-define( 'METADEBUG_VERSION', '1.1.0' );
-define( 'METADEBUG_FILE', __FILE__ );
-define( 'METADEBUG_PATH', plugin_dir_path( __FILE__ ) );
-define( 'METADEBUG_URL', plugin_dir_url( __FILE__ ) );
-define( 'METADEBUG_BASENAME', plugin_basename( __FILE__ ) );
-
-// Legacy aliases for backward compatibility if needed
-define( 'WPMD_VERSION', METADEBUG_VERSION );
-define( 'WPMD_PLUGIN_FILE', METADEBUG_FILE );
-define( 'WPMD_PLUGIN_DIR', METADEBUG_PATH );
-define( 'WPMD_PLUGIN_URL', METADEBUG_URL );
-define( 'WPMD_PLUGIN_BASENAME', METADEBUG_BASENAME );
+define( 'WPMD_VERSION', '1.1.0' );
+define( 'WPMD_PLUGIN_FILE', __FILE__ );
+define( 'WPMD_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+define( 'WPMD_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+define( 'WPMD_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 
 // ── AUTOLOADER ───────────────────────────────────────────────────────────────
 
-require_once METADEBUG_PATH . 'includes/Core/Autoloader.php';
+require_once WPMD_PLUGIN_DIR . 'includes/Core/Autoloader.php';
 MetaDebugger\Core\Autoloader::register();
 
 // ── LIFECYCLE HOOKS ──────────────────────────────────────────────────────────

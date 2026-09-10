@@ -57,13 +57,13 @@ class AdminBar {
         );
 
         $wp_admin_bar->add_node( [
-            'id'    => 'metadebug-trigger-node',
+            'id'    => 'wpmd-trigger-node',
             'title' => $title,
             'href'  => '#',
             'meta'  => [
                 'title'   => esc_attr__( 'Meta Debugger (Ctrl+Shift+D)', 'meta-debugger' ),
-                'onclick' => 'if(window.metadebugTogglePanel){window.metadebugTogglePanel();return false;}',
-                'class'   => 'metadebug-admin-bar-trigger',
+                'onclick' => 'if(window.wpmdTogglePanel){window.wpmdTogglePanel();return false;}',
+                'class'   => 'wpmd-admin-bar-trigger',
             ],
         ] );
     }

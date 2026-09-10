@@ -9,7 +9,7 @@
 (function () {
     'use strict';
 
-    const cfg = window.metadebugConfig || window.wpmdConfig;
+    const cfg = window.wpmdConfig;
     if (!cfg) {
         return;
     }
@@ -37,7 +37,6 @@
     const $searchClear = $('wpmd-search-clear');
     const $results     = $('wpmd-search-results');
     const $editLink    = $('wpmd-edit-link');
-    const $productCard = $('wpmd-product-card');
     const $metaFilter  = $('wpmd-meta-filter');
     const $content     = $('wpmd-content');
     const $status      = $('wpmd-status');
@@ -86,7 +85,6 @@
     }
 
     // Expose global toggler for Admin Bar
-    window.metadebugTogglePanel = panelOpen;
     window.wpmdTogglePanel = function () {
         if ($panel.classList.contains('open')) {
             panelClose();
@@ -260,7 +258,11 @@
 
             if (json.success && json.data) {
                 state.metaStore = json.data.meta || {};
-                renderProductCard(json.data.item);
+                // Update edit link in header
+                if ($editLink && json.data.item) {
+                    $editLink.href = json.data.item.edit_url || '#';
+                    $editLink.hidden = !json.data.item.edit_url;
+                }
                 renderMetaTree(state.metaStore);
                 updateStatus(`${json.data.total} meta keys loaded for #${id}`);
             } else {
@@ -269,31 +271,6 @@
         } catch (err) {
             showErrorState(i18n.errorLoading || 'Error loading metadata.');
         }
-    }
-
-    function renderProductCard(item) {
-        if (!$productCard || !item) return;
-
-        if ($editLink) {
-            $editLink.href = item.edit_url || '#';
-            $editLink.hidden = !item.edit_url;
-        }
-
-        $productCard.innerHTML = `
-            <div class="wpmd-card-inner">
-                ${item.thumb ? `<img class="wpmd-thumb" src="${escapeHtml(item.thumb)}" alt="${escapeHtml(item.name)}">` : '<div class="wpmd-thumb-placeholder"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>'}
-                <div class="wpmd-card-details">
-                    <h3 class="wpmd-card-title">${escapeHtml(item.name)}</h3>
-                    <div class="wpmd-card-meta-line">
-                        <span class="wpmd-badge">${escapeHtml(item.type)}</span>
-                        <span class="wpmd-badge wpmd-status-${escapeHtml(item.status)}">${escapeHtml(item.status)}</span>
-                        ${item.sku ? `<span class="wpmd-card-sku">SKU: ${escapeHtml(item.sku)}</span>` : ''}
-                        <span class="wpmd-card-id">ID: #${item.id}</span>
-                    </div>
-                </div>
-            </div>
-        `;
-        $productCard.hidden = false;
     }
 
     // ── Meta Filter Search ────────────────────────────────────────────────────
@@ -306,7 +283,7 @@
 
     function filterMetaTree(query) {
         if (!$content) return;
-        const rows = $content.querySelectorAll('.wpmd-tree-row');
+        const rows = $content.querySelectorAll('.wpmd-meta-row');
         if (!query) {
             rows.forEach(r => r.style.display = '');
             return;
@@ -324,16 +301,16 @@
     if ($expandAll) {
         $expandAll.addEventListener('click', function () {
             if (!$content) return;
-            $content.querySelectorAll('.wpmd-node-children').forEach(el => el.hidden = false);
-            $content.querySelectorAll('.wpmd-caret').forEach(el => el.classList.add('open'));
+            $content.querySelectorAll('.wpmd-tree-body').forEach(el => el.classList.add('open'));
+            $content.querySelectorAll('.wpmd-tree-toggle').forEach(el => el.classList.add('open'));
         });
     }
 
     if ($collapseAll) {
         $collapseAll.addEventListener('click', function () {
             if (!$content) return;
-            $content.querySelectorAll('.wpmd-node-children').forEach(el => el.hidden = true);
-            $content.querySelectorAll('.wpmd-caret').forEach(el => el.classList.remove('open'));
+            $content.querySelectorAll('.wpmd-tree-body').forEach(el => el.classList.remove('open'));
+            $content.querySelectorAll('.wpmd-tree-toggle').forEach(el => el.classList.remove('open'));
         });
     }
 
@@ -347,89 +324,113 @@
             return;
         }
 
-        const fragment = document.createDocumentFragment();
-        const $tree = document.createElement('div');
-        $tree.className = 'wpmd-tree';
+        const $wrap = document.createElement('div');
+        $wrap.className = 'wpmd-category';
 
         keys.forEach(key => {
             const value = metaData[key];
-            const $row = buildTreeRow(key, value, 0);
-            $tree.appendChild($row);
+            $wrap.appendChild(buildMetaRow(key, value));
         });
 
-        fragment.appendChild($tree);
         $content.innerHTML = '';
-        $content.appendChild(fragment);
+        $content.appendChild($wrap);
     }
 
-    function buildTreeRow(key, val, depth) {
+    function buildMetaRow(key, val) {
         const type = getValueType(val);
-        const $row = document.createElement('div');
-        $row.className = `wpmd-tree-row wpmd-type-${type}`;
-        $row.setAttribute('data-key', key);
-
+        const isExpandable = type === 'object' || type === 'array';
         const previewStr = getPreviewString(val);
+
+        const $row = document.createElement('div');
+        $row.className = 'wpmd-meta-row';
+        $row.setAttribute('data-key', key);
         $row.setAttribute('data-value-preview', previewStr);
 
-        const isExpandable = type === 'object' || type === 'array';
-
-        $row.innerHTML = `
-            <div class="wpmd-row-header" style="padding-left: ${depth * 14 + 10}px">
-                ${isExpandable ? `<span class="wpmd-caret">▶</span>` : `<span class="wpmd-caret-spacer"></span>`}
-                <span class="wpmd-key">${escapeHtml(key)}</span>
-                <span class="wpmd-type-tag">${type}</span>
-                <span class="wpmd-val-preview">${escapeHtml(previewStr)}</span>
-                <div class="wpmd-row-actions">
-                    <button class="wpmd-act-btn wpmd-view-btn" title="View Details">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                    </button>
-                    <button class="wpmd-act-btn wpmd-copy-btn" title="Copy Value">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                    </button>
-                </div>
-            </div>
+        // Key column
+        const $keyCol = document.createElement('div');
+        $keyCol.className = 'wpmd-meta-key-col';
+        $keyCol.innerHTML = `
+            <span class="wpmd-meta-key">${escapeHtml(key)}</span>
+            <span class="wpmd-type-pill wpmd-type-${type}">${type}</span>
         `;
 
+        // Value column
+        const $valCol = document.createElement('div');
+        $valCol.className = 'wpmd-meta-val-col';
+
         if (isExpandable) {
-            const $children = document.createElement('div');
-            $children.className = 'wpmd-node-children';
-            $children.hidden = true;
+            // Collapsible tree toggle button
+            const $toggle = document.createElement('button');
+            $toggle.className = 'wpmd-tree-toggle';
+            $toggle.innerHTML = `
+                <svg class="wpmd-chevron" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                ${previewStr}
+            `;
 
-            const childKeys = Object.keys(val);
-            childKeys.forEach(ckey => {
-                $children.appendChild(buildTreeRow(ckey, val[ckey], depth + 1));
+            const $treeBody = document.createElement('div');
+            $treeBody.className = 'wpmd-tree-body';
+
+            const $treeRoot = document.createElement('div');
+            $treeRoot.className = 'wpmd-tree-root';
+
+            Object.entries(val).forEach(([ckey, cval]) => {
+                const $node = document.createElement('div');
+                $node.className = 'wpmd-tree-node';
+                const ctype = getValueType(cval);
+                const cPreview = getPreviewString(cval);
+                $node.innerHTML = `
+                    <div class="wpmd-tree-row">
+                        <span class="wpmd-tree-key">${escapeHtml(ckey)}</span>
+                        <span class="wpmd-tree-colon">:</span>
+                        <span class="wpmd-tree-val wpmd-type-${ctype}">${escapeHtml(cPreview)}</span>
+                    </div>
+                `;
+                $treeRoot.appendChild($node);
             });
 
-            $row.appendChild($children);
+            $treeBody.appendChild($treeRoot);
 
-            const $rowHeader = $row.querySelector('.wpmd-row-header');
-            const $caret = $row.querySelector('.wpmd-caret');
-
-            $rowHeader.addEventListener('click', function (e) {
-                if (e.target.closest('.wpmd-row-actions')) return;
-                const isHidden = $children.hidden;
-                $children.hidden = !isHidden;
-                if ($caret) $caret.classList.toggle('open', isHidden);
+            $toggle.addEventListener('click', () => {
+                const isOpen = $treeBody.classList.toggle('open');
+                $toggle.classList.toggle('open', isOpen);
             });
+
+            $valCol.appendChild($toggle);
+            $valCol.appendChild($treeBody);
+        } else {
+            const $preview = document.createElement('div');
+            $preview.className = `wpmd-meta-val-preview wpmd-type-${type}`;
+            $preview.textContent = previewStr;
+            $preview.addEventListener('click', () => openValueModal(key, val, type));
+            $valCol.appendChild($preview);
         }
 
-        // Action Handlers
-        const $viewBtn = $row.querySelector('.wpmd-view-btn');
-        const $copyBtn = $row.querySelector('.wpmd-copy-btn');
+        // Actions column
+        const $actions = document.createElement('div');
+        $actions.className = 'wpmd-meta-actions';
+        $actions.innerHTML = `
+            <button class="wpmd-inspect-btn" title="View Details">
+                <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+            <button class="wpmd-copy-btn" title="Copy Value">
+                <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            </button>
+        `;
 
-        if ($viewBtn) {
-            $viewBtn.addEventListener('click', e => {
-                e.stopPropagation();
-                openValueModal(key, val, type);
-            });
-        }
+        $actions.querySelector('.wpmd-inspect-btn').addEventListener('click', e => {
+            e.stopPropagation();
+            openValueModal(key, val, type);
+        });
 
-        if ($copyBtn) {
-            $copyBtn.addEventListener('click', e => {
-                e.stopPropagation();
-                copyToClipboard(typeof val === 'object' ? JSON.stringify(val, null, 2) : String(val), $copyBtn);
-            });
-        }
+        $actions.querySelector('.wpmd-copy-btn').addEventListener('click', e => {
+            e.stopPropagation();
+            const str = typeof val === 'object' ? JSON.stringify(val, null, 2) : String(val);
+            copyToClipboard(str, $actions.querySelector('.wpmd-copy-btn'));
+        });
+
+        $row.appendChild($keyCol);
+        $row.appendChild($valCol);
+        $row.appendChild($actions);
 
         return $row;
     }

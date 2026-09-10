@@ -112,28 +112,28 @@ class Assets {
      * Enqueue the core debugger drawer CSS and JS.
      */
     private function enqueue_drawer_assets(): void {
-        $css_file = METADEBUG_PATH . 'assets/css/meta-debugger.css';
-        $js_file  = METADEBUG_PATH . 'assets/js/meta-debugger.js';
+        $css_file = WPMD_PLUGIN_DIR . 'assets/css/meta-debugger.css';
+        $js_file  = WPMD_PLUGIN_DIR . 'assets/js/meta-debugger.js';
 
-        $css_ver = file_exists( $css_file ) ? (string) filemtime( $css_file ) : METADEBUG_VERSION;
-        $js_ver  = file_exists( $js_file ) ? (string) filemtime( $js_file ) : METADEBUG_VERSION;
+        $css_ver = file_exists( $css_file ) ? (string) filemtime( $css_file ) : WPMD_VERSION;
+        $js_ver  = file_exists( $js_file ) ? (string) filemtime( $js_file ) : WPMD_VERSION;
 
         wp_enqueue_style(
-            'metadebug-style',
-            METADEBUG_URL . 'assets/css/meta-debugger.css',
+            'wpmd-style',
+            WPMD_PLUGIN_URL . 'assets/css/meta-debugger.css',
             [],
             $css_ver
         );
 
         wp_enqueue_script(
-            'metadebug-script',
-            METADEBUG_URL . 'assets/js/meta-debugger.js',
+            'wpmd-script',
+            WPMD_PLUGIN_URL . 'assets/js/meta-debugger.js',
             [],
             $js_ver,
             true
         );
 
-        wp_localize_script( 'metadebug-script', 'metadebugConfig', [
+        wp_localize_script( 'wpmd-script', 'wpmdConfig', [
             'ajaxUrl'    => admin_url( 'admin-ajax.php' ),
             'nonce'      => wp_create_nonce( Constants::NONCE_ACTION ),
             'adminUrl'   => admin_url(),
@@ -159,13 +159,13 @@ class Assets {
      * Enqueue settings page CSS and JS.
      */
     private function enqueue_settings_assets(): void {
-        $css_file = METADEBUG_PATH . 'assets/css/meta-debugger-admin.css';
+        $css_file = WPMD_PLUGIN_DIR . 'assets/css/meta-debugger-admin.css';
 
-        $css_ver = file_exists( $css_file ) ? (string) filemtime( $css_file ) : METADEBUG_VERSION;
+        $css_ver = file_exists( $css_file ) ? (string) filemtime( $css_file ) : WPMD_VERSION;
 
         wp_enqueue_style(
-            'metadebug-admin-style',
-            METADEBUG_URL . 'assets/css/meta-debugger-admin.css',
+            'wpmd-admin-style',
+            WPMD_PLUGIN_URL . 'assets/css/meta-debugger-admin.css',
             [],
             $css_ver
         );

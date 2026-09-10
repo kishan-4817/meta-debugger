@@ -128,7 +128,7 @@ final class Plugin {
         load_plugin_textdomain(
             'meta-debugger',
             false,
-            dirname( METADEBUG_BASENAME ) . '/languages'
+            dirname( WPMD_PLUGIN_BASENAME ) . '/languages'
         );
     }
 
@@ -151,7 +151,7 @@ final class Plugin {
 
         $trigger_position = $this->settings['trigger_position'] ?? 'bottom-left';
 
-        include METADEBUG_PATH . 'views/drawer.php';
-        include METADEBUG_PATH . 'views/modal.php';
+        include WPMD_PLUGIN_DIR . 'views/drawer.php';
+        include WPMD_PLUGIN_DIR . 'views/modal.php';
     }
 }

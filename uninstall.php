@@ -2,7 +2,7 @@
 /**
  * Fired when the plugin is uninstalled.
  *
- * @package ProductMetaDebugger
+ * @package MetaDebugger
  */
 
 // If uninstall not called from WordPress, exit.

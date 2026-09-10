@@ -46,7 +46,7 @@ class Security {
          *
          * @param string $cap The required capability.
          */
-        return (string) apply_filters( 'metadebug_required_capability', $cap );
+        return (string) apply_filters( 'wpmd_required_capability', $cap );
     }
 
     /**
@@ -112,7 +112,7 @@ class Security {
          *
          * @param array $defaults Array of blocked key patterns.
          */
-        return (array) apply_filters( 'metadebug_blocked_keys', array_unique( $defaults ) );
+        return (array) apply_filters( 'wpmd_blocked_keys', array_unique( $defaults ) );
     }
 
     /**

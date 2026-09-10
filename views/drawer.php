@@ -62,8 +62,6 @@ $trigger_pos = isset( $trigger_position ) ? $trigger_position : 'bottom-left';
         <div id="wpmd-search-results" class="wpmd-search-results" role="listbox" aria-label="<?php esc_attr_e( 'Item search results', 'meta-debugger' ); ?>" hidden></div>
     </div>
 
-    <!-- ITEM CARD -->
-    <div id="wpmd-product-card" class="wpmd-product-card" hidden></div>
 
     <!-- META FILTER & CONTROLS -->
     <div class="wpmd-filter-row">

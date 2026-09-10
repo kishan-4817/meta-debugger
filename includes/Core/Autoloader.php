@@ -41,7 +41,7 @@ final class Autoloader {
 
         $relative_class = substr( $class_name, strlen( self::NAMESPACE_PREFIX ) );
         $relative_path  = str_replace( '\\', '/', $relative_class );
-        $file_path      = METADEBUG_PATH . 'includes/' . $relative_path . '.php';
+        $file_path      = WPMD_PLUGIN_DIR . 'includes/' . $relative_path . '.php';
 
         if ( is_readable( $file_path ) ) {
             require_once $file_path;
