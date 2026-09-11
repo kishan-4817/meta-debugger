@@ -276,7 +276,7 @@
 /* ── Fullscreen State ─────────────────────────────────────────────────────── */
 
 .wpmd-panel.fullscreen {
-    width: 100vw;
+    width: 100%;
     left: 0;
     right: auto;
     border-left: none;
