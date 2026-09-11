@@ -278,6 +278,7 @@
 .wpmd-panel.fullscreen {
     width: 100vw;
     left: 0;
+    right: auto;
     border-left: none;
     border-right: none;
 }
