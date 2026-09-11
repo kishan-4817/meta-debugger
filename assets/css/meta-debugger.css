@@ -277,8 +277,9 @@
 
 .wpmd-panel.fullscreen {
     width: 100vw;
+    left: 0;
     border-left: none;
-    transition: width var(--wpmd-transition);
+    border-right: none;
 }
 
 /* ── Custom Scrollbar ─────────────────────────────────────────────────────── */
