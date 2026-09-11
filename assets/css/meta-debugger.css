@@ -281,6 +281,16 @@
     right: auto;
     border-left: none;
     border-right: none;
+    box-shadow: none;
+    overflow-x: hidden;
+}
+
+.wpmd-panel.fullscreen .wpmd-header {
+    padding-right: var(--wpmd-space-5);
+}
+
+.wpmd-panel.fullscreen .wpmd-footer {
+    padding-right: var(--wpmd-space-5);
 }
 
 /* ── Custom Scrollbar ─────────────────────────────────────────────────────── */
