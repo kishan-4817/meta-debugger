@@ -93,7 +93,7 @@
     --wpmd-shadow-lg: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 
     /* ── Layout ─────────────────────────────────────────────────────────────── */
-    --wpmd-panel-w: 420px;
+    --wpmd-panel-w: 480px;
 
     /* ── Transitions ────────────────────────────────────────────────────────── */
     --wpmd-transition:     150ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -273,6 +273,13 @@
     transform: translateX(0);
 }
 
+/* ── Fullscreen State ─────────────────────────────────────────────────────── */
+
+.wpmd-panel.fullscreen {
+    width: 100vw;
+    transition: width var(--wpmd-transition);
+}
+
 /* ══════════════════════════════════════════════════════════════════════════════
    HEADER
    ══════════════════════════════════════════════════════════════════════════════ */
@@ -371,6 +378,40 @@
     background: var(--wpmd-surface-hover);
     color: var(--wpmd-text-primary);
     border-color: var(--wpmd-border);
+}
+
+/* ── Fullscreen Button ───────────────────────────────────────────────────── */
+
+.wpmd-fullscreen-btn {
+    background: none;
+    border: 1px solid transparent;
+    border-radius: var(--wpmd-radius-md);
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--wpmd-text-muted);
+    cursor: pointer;
+    transition: all var(--wpmd-transition-fast);
+}
+
+.wpmd-fullscreen-btn:hover {
+    background: var(--wpmd-surface-hover);
+    color: var(--wpmd-text-primary);
+    border-color: var(--wpmd-border);
+}
+
+.wpmd-fullscreen-btn .wpmd-shrink-icon {
+    display: none;
+}
+
+.wpmd-panel.fullscreen .wpmd-fullscreen-btn .wpmd-expand-icon {
+    display: none;
+}
+
+.wpmd-panel.fullscreen .wpmd-fullscreen-btn .wpmd-shrink-icon {
+    display: block;
 }
 
 /* ══════════════════════════════════════════════════════════════════════════════

@@ -42,6 +42,7 @@
     const $status      = $('wpmd-status');
     const $expandAll   = $('wpmd-expand-all');
     const $collapseAll = $('wpmd-collapse-all');
+    const $fullscreen  = $('wpmd-fullscreen');
 
     // Modal elements
     const $modal      = $('wpmd-modal');
@@ -84,6 +85,10 @@
         hideDropdown();
     }
 
+    function toggleFullscreen() {
+        $panel.classList.toggle('fullscreen');
+    }
+
     // Expose global toggler for Admin Bar
     window.wpmdTogglePanel = function () {
         if ($panel.classList.contains('open')) {
@@ -98,6 +103,9 @@
     }
     if ($close) {
         $close.addEventListener('click', panelClose);
+    }
+    if ($fullscreen) {
+        $fullscreen.addEventListener('click', toggleFullscreen);
     }
     if ($overlay) {
         $overlay.addEventListener('click', panelClose);
