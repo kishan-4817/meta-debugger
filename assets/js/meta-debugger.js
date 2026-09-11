@@ -20,8 +20,6 @@
     const state = {
         objectId:       0,
         metaStore:      {},
-        searchTimer:    null,
-        activeIdx:      -1,
         activeModalKey: '',
         activeModalVal: null,
     };
@@ -33,9 +31,6 @@
     const $overlay     = $('wpmd-overlay');
     const $toggle      = $('wpmd-toggle');
     const $close       = $panel ? $panel.querySelector('.wpmd-close') : null;
-    const $search      = $('wpmd-search');
-    const $searchClear = $('wpmd-search-clear');
-    const $results     = $('wpmd-search-results');
     const $editLink    = $('wpmd-edit-link');
     const $metaFilter  = $('wpmd-meta-filter');
     const $content     = $('wpmd-content');
@@ -64,14 +59,9 @@
             $overlay.classList.add('active');
             $overlay.setAttribute('aria-hidden', 'false');
         }
-        if ($search) {
-            $search.focus();
-        }
 
         if (!state.objectId && cfg.currentId) {
             selectItem(cfg.currentId);
-        } else if (!state.objectId) {
-            loadFirstItem();
         }
     }
 
@@ -82,7 +72,6 @@
             $overlay.classList.remove('active');
             $overlay.setAttribute('aria-hidden', 'true');
         }
-        hideDropdown();
     }
 
     function toggleFullscreen() {
@@ -127,128 +116,6 @@
             }
         }
     });
-
-    // ── Search Handling ───────────────────────────────────────────────────────
-    if ($search) {
-        $search.addEventListener('input', function () {
-            const q = this.value.trim();
-            if ($searchClear) {
-                $searchClear.hidden = !q;
-            }
-            clearTimeout(state.searchTimer);
-            if (q.length < 1) {
-                hideDropdown();
-                return;
-            }
-            state.searchTimer = setTimeout(() => fetchSearchItems(q), 260);
-        });
-
-        $search.addEventListener('keydown', function (e) {
-            const items = $results ? $results.querySelectorAll('.wpmd-result-item') : [];
-            if (!items.length) return;
-
-            if (e.key === 'ArrowDown') {
-                e.preventDefault();
-                state.activeIdx = Math.min(state.activeIdx + 1, items.length - 1);
-                highlightResult(items);
-            } else if (e.key === 'ArrowUp') {
-                e.preventDefault();
-                state.activeIdx = Math.max(state.activeIdx - 1, -1);
-                highlightResult(items);
-            } else if (e.key === 'Enter' && state.activeIdx >= 0) {
-                e.preventDefault();
-                items[state.activeIdx].click();
-            }
-        });
-    }
-
-    if ($searchClear) {
-        $searchClear.addEventListener('click', function () {
-            $search.value = '';
-            $searchClear.hidden = true;
-            hideDropdown();
-            $search.focus();
-        });
-    }
-
-    document.addEventListener('click', function (e) {
-        if (!e.target.closest('.wpmd-search-section')) {
-            hideDropdown();
-        }
-    });
-
-    function highlightResult(items) {
-        items.forEach((el, i) => {
-            el.classList.toggle('highlighted', i === state.activeIdx);
-            el.setAttribute('aria-selected', i === state.activeIdx ? 'true' : 'false');
-        });
-    }
-
-    async function fetchSearchItems(query) {
-        const fd = new FormData();
-        fd.append('action', 'wpmd_search');
-        fd.append('nonce', cfg.nonce);
-        fd.append('search', query);
-
-        try {
-            const res = await fetch(cfg.ajaxUrl, { method: 'POST', body: fd });
-            const json = await res.json();
-            renderDropdown(json.success ? json.data : []);
-        } catch (err) {
-            console.error('MetaDebugger search error:', err);
-        }
-    }
-
-    function renderDropdown(items) {
-        if (!$results) return;
-        state.activeIdx = -1;
-
-        if (!items || !items.length) {
-            $results.innerHTML = `<div class="wpmd-no-results">${escapeHtml(i18n.noProductsFound || 'No items found')}</div>`;
-            $results.hidden = false;
-            $search.setAttribute('aria-expanded', 'true');
-            return;
-        }
-
-        $results.innerHTML = items.map(item => `
-            <div class="wpmd-result-item" data-id="${item.id}" role="option" aria-selected="false">
-                <div class="wpmd-result-title">${escapeHtml(item.title)}</div>
-                <div class="wpmd-result-meta">
-                    <span class="wpmd-badge">${escapeHtml(item.type)}</span>
-                    ${item.sku ? `<span class="wpmd-sku">SKU: ${escapeHtml(item.sku)}</span>` : ''}
-                    <span class="wpmd-id">#${item.id}</span>
-                </div>
-            </div>
-        `).join('');
-
-        $results.hidden = false;
-        $search.setAttribute('aria-expanded', 'true');
-
-        $results.querySelectorAll('.wpmd-result-item').forEach(el => {
-            el.addEventListener('click', function () {
-                const id = parseInt(this.getAttribute('data-id'), 10);
-                selectItem(id);
-                hideDropdown();
-                if ($search) $search.value = '';
-                if ($searchClear) $searchClear.hidden = true;
-            });
-        });
-    }
-
-    function hideDropdown() {
-        if ($results) {
-            $results.hidden = true;
-            $results.innerHTML = '';
-        }
-        if ($search) {
-            $search.setAttribute('aria-expanded', 'false');
-        }
-        state.activeIdx = -1;
-    }
-
-    async function loadFirstItem() {
-        fetchSearchItems('');
-    }
 
     // ── Item Selection & Metadata Fetching ───────────────────────────────────
     async function selectItem(id) {

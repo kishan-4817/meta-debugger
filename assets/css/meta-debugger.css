@@ -24,8 +24,8 @@
 
     /* Text (all meet WCAG AA on white) */
     --wpmd-text-primary:   #18181b;  /* zinc-900  → 18.4:1 */
-    --wpmd-text-secondary: #3f3f46;  /* zinc-700  → 9.7:1  */
-    --wpmd-text-muted:     #71717a;  /* zinc-500  → 4.8:1  */
+    --wpmd-text-secondary: #27272a;  /* zinc-800  → 14.5:1 */
+    --wpmd-text-muted:     #52525b;  /* zinc-600  → 7.0:1  */
 
     /* Accent (primary action) */
     --wpmd-accent:        #18181b;
@@ -113,8 +113,8 @@
 
         /* Text (all meet WCAG AA on zinc-950) */
         --wpmd-text-primary:   #fafafa;  /* zinc-50  → 18.4:1 */
-        --wpmd-text-secondary: #a1a1aa;  /* zinc-400 → 8.1:1  */
-        --wpmd-text-muted:     #71717a;  /* zinc-500 → 4.8:1  */
+        --wpmd-text-secondary: #d4d4d8;  /* zinc-300 → 11.5:1 */
+        --wpmd-text-muted:     #a1a1aa;  /* zinc-400 → 7.5:1  */
 
         /* Accent */
         --wpmd-accent:        #fafafa;
@@ -277,7 +277,32 @@
 
 .wpmd-panel.fullscreen {
     width: 100vw;
+    border-left: none;
     transition: width var(--wpmd-transition);
+}
+
+/* ── Custom Scrollbar ─────────────────────────────────────────────────────── */
+
+.wpmd-panel ::-webkit-scrollbar,
+.wpmd-modal ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.wpmd-panel ::-webkit-scrollbar-track,
+.wpmd-modal ::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.wpmd-panel ::-webkit-scrollbar-thumb,
+.wpmd-modal ::-webkit-scrollbar-thumb {
+    background: var(--wpmd-border);
+    border-radius: var(--wpmd-radius-full);
+}
+
+.wpmd-panel ::-webkit-scrollbar-thumb:hover,
+.wpmd-modal ::-webkit-scrollbar-thumb:hover {
+    background: var(--wpmd-text-muted);
 }
 
 /* ══════════════════════════════════════════════════════════════════════════════
@@ -322,7 +347,7 @@
 
 .wpmd-brand-sub {
     font-size: var(--wpmd-text-xs);
-    color: var(--wpmd-text-muted);
+    color: var(--wpmd-text-secondary);
     margin-top: 1px;
     line-height: 1.2;
 }
@@ -341,7 +366,8 @@
     font-weight: 500;
     color: var(--wpmd-text-secondary);
     text-decoration: none;
-    padding: var(--wpmd-space-1) var(--wpmd-space-3);
+    height: 28px;
+    padding: 0 var(--wpmd-space-3);
     border: 1px solid var(--wpmd-border);
     border-radius: var(--wpmd-radius-md);
     background: var(--wpmd-bg);
@@ -361,17 +387,17 @@
 }
 
 .wpmd-close {
-    background: none;
-    border: 1px solid transparent;
+    background: var(--wpmd-bg);
+    border: 1px solid var(--wpmd-border);
     border-radius: var(--wpmd-radius-md);
     width: 28px;
     height: 28px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--wpmd-text-muted);
+    color: var(--wpmd-text-secondary);
     cursor: pointer;
-    transition: all var(--wpmd-transition-fast);
+    transition: all var(--wpmd-transition);
 }
 
 .wpmd-close:hover {
@@ -383,17 +409,17 @@
 /* ── Fullscreen Button ───────────────────────────────────────────────────── */
 
 .wpmd-fullscreen-btn {
-    background: none;
-    border: 1px solid transparent;
+    background: var(--wpmd-bg);
+    border: 1px solid var(--wpmd-border);
     border-radius: var(--wpmd-radius-md);
     width: 28px;
     height: 28px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--wpmd-text-muted);
+    color: var(--wpmd-text-secondary);
     cursor: pointer;
-    transition: all var(--wpmd-transition-fast);
+    transition: all var(--wpmd-transition);
 }
 
 .wpmd-fullscreen-btn:hover {
@@ -415,87 +441,8 @@
 }
 
 /* ══════════════════════════════════════════════════════════════════════════════
-   SEARCH SECTION
+   FILTER ROW
    ══════════════════════════════════════════════════════════════════════════════ */
-
-.wpmd-search-section {
-    position: relative;
-    padding: var(--wpmd-space-3) var(--wpmd-space-4);
-    background: var(--wpmd-bg);
-    border-bottom: 1px solid var(--wpmd-border);
-    flex-shrink: 0;
-}
-
-.wpmd-search-wrap {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-
-.wpmd-search-icon {
-    position: absolute;
-    left: var(--wpmd-space-3);
-    color: var(--wpmd-text-muted);
-    pointer-events: none;
-}
-
-.wpmd-search-input {
-    width: 100%;
-    height: 36px;
-    padding: 0 var(--wpmd-space-10) 0 var(--wpmd-space-8);
-    background: var(--wpmd-surface);
-    border: 1px solid var(--wpmd-border);
-    border-radius: var(--wpmd-radius-md);
-    color: var(--wpmd-text-primary);
-    font-size: var(--wpmd-text-base);
-    outline: none;
-    transition: all var(--wpmd-transition);
-}
-
-.wpmd-search-input::placeholder {
-    color: var(--wpmd-text-muted);
-}
-
-.wpmd-search-input:focus {
-    background: var(--wpmd-bg);
-    border-color: var(--wpmd-accent);
-    box-shadow: 0 0 0 2px var(--wpmd-border);
-}
-
-.wpmd-search-clear {
-    position: absolute;
-    right: var(--wpmd-space-2);
-    background: none;
-    border: none;
-    color: var(--wpmd-text-muted);
-    cursor: pointer;
-    padding: var(--wpmd-space-1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: var(--wpmd-radius-sm);
-    transition: all var(--wpmd-transition-fast);
-}
-
-.wpmd-search-clear:hover {
-    background: var(--wpmd-surface-hover);
-    color: var(--wpmd-text-primary);
-}
-
-.wpmd-search-results {
-    position: absolute;
-    top: 100%;
-    left: var(--wpmd-space-4);
-    right: var(--wpmd-space-4);
-    background: var(--wpmd-bg);
-    border: 1px solid var(--wpmd-border);
-    border-radius: var(--wpmd-radius-lg);
-    box-shadow: var(--wpmd-shadow-lg);
-    max-height: 280px;
-    overflow-y: auto;
-    z-index: 100;
-    margin-top: var(--wpmd-space-1);
-}
 
 .wpmd-result-item {
     display: flex;
@@ -528,7 +475,7 @@
 
 .wpmd-result-meta {
     font-size: var(--wpmd-text-xs);
-    color: var(--wpmd-text-muted);
+    color: var(--wpmd-text-secondary);
     margin-top: 2px;
     display: flex;
     align-items: center;
@@ -540,7 +487,7 @@
     padding: 1px var(--wpmd-space-2);
     border-radius: var(--wpmd-radius-sm);
     background: var(--wpmd-surface-hover);
-    color: var(--wpmd-text-secondary);
+    color: var(--wpmd-text-primary);
     text-transform: uppercase;
     letter-spacing: 0.03em;
     flex-shrink: 0;
@@ -552,7 +499,7 @@
 .wpmd-no-results {
     padding: var(--wpmd-space-5);
     text-align: center;
-    color: var(--wpmd-text-muted);
+    color: var(--wpmd-text-secondary);
     font-size: var(--wpmd-text-base);
 }
 
@@ -570,6 +517,14 @@
     flex-shrink: 0;
 }
 
+.wpmd-filter-icon {
+    color: var(--wpmd-text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
 .wpmd-filter-wrap {
     position: relative;
     flex: 1;
@@ -580,23 +535,25 @@
 .wpmd-filter-input {
     width: 100%;
     height: 32px;
-    padding: 0 var(--wpmd-space-3) 0 var(--wpmd-space-8);
+    padding: 0 var(--wpmd-space-3);
     background: var(--wpmd-bg);
     border: 1px solid var(--wpmd-border);
     border-radius: var(--wpmd-radius-md);
     color: var(--wpmd-text-primary);
     font-size: var(--wpmd-text-sm);
     outline: none;
-    transition: all var(--wpmd-transition);
+    transition: none;
 }
 
 .wpmd-filter-input::placeholder {
     color: var(--wpmd-text-muted);
 }
 
-.wpmd-filter-input:focus {
-    border-color: var(--wpmd-accent);
-    box-shadow: 0 0 0 2px var(--wpmd-border);
+.wpmd-filter-input:focus,
+.wpmd-filter-input:active {
+    border-color: var(--wpmd-border);
+    box-shadow: none;
+    outline: none;
 }
 
 .wpmd-expand-actions {
@@ -609,14 +566,15 @@
     border: 1px solid var(--wpmd-border);
     border-radius: var(--wpmd-radius-md);
     color: var(--wpmd-text-secondary);
-    font-size: var(--wpmd-text-xs);
-    padding: var(--wpmd-space-1) var(--wpmd-space-2);
+    font-size: var(--wpmd-text-sm);
+    font-weight: 500;
+    height: 32px;
+    padding: 0 var(--wpmd-space-2);
     cursor: pointer;
     display: inline-flex;
     align-items: center;
     gap: var(--wpmd-space-1);
-    transition: all var(--wpmd-transition-fast);
-    font-weight: 500;
+    transition: all var(--wpmd-transition);
     line-height: 1.4;
 }
 
@@ -659,7 +617,7 @@
     justify-content: center;
     gap: var(--wpmd-space-3);
     padding: var(--wpmd-space-8) var(--wpmd-space-5);
-    color: var(--wpmd-text-muted);
+    color: var(--wpmd-text-secondary);
     font-size: var(--wpmd-text-base);
 }
 
@@ -685,7 +643,7 @@
     padding: var(--wpmd-space-8) var(--wpmd-space-5);
     text-align: center;
     font-size: var(--wpmd-text-base);
-    color: var(--wpmd-text-muted);
+    color: var(--wpmd-text-secondary);
 }
 
 .wpmd-error {
@@ -703,7 +661,7 @@
     padding: 1px var(--wpmd-space-2);
     border-radius: var(--wpmd-radius-sm);
     background: var(--wpmd-surface-hover);
-    color: var(--wpmd-text-secondary);
+    color: var(--wpmd-text-primary);
     text-transform: uppercase;
     letter-spacing: 0.03em;
     border: 1px solid var(--wpmd-border);
@@ -713,7 +671,7 @@
 .wpmd-sku,
 .wpmd-id {
     font-size: var(--wpmd-text-xs);
-    color: var(--wpmd-text-muted);
+    color: var(--wpmd-text-secondary);
     font-family: var(--wpmd-mono);
 }
 
@@ -762,7 +720,7 @@
     border-radius: var(--wpmd-radius-sm);
     width: fit-content;
     background: var(--wpmd-surface-hover);
-    color: var(--wpmd-text-muted);
+    color: var(--wpmd-text-secondary);
     border: 1px solid var(--wpmd-border);
     line-height: 1.4;
 }
@@ -785,13 +743,13 @@
     font-size: var(--wpmd-text-sm);
     cursor: pointer;
     word-break: break-all;
-    color: var(--wpmd-text-secondary);
+    color: var(--wpmd-text-primary);
     transition: color var(--wpmd-transition-fast);
     line-height: 1.4;
 }
 
 .wpmd-meta-val-preview:hover {
-    color: var(--wpmd-text-primary);
+    color: var(--wpmd-accent);
 }
 
 .wpmd-meta-actions {
@@ -809,17 +767,21 @@
 
 .wpmd-copy-btn,
 .wpmd-inspect-btn {
-    background: none;
-    border: 1px solid transparent;
-    border-radius: var(--wpmd-radius-sm);
-    color: var(--wpmd-text-muted);
-    font-size: var(--wpmd-text-xs);
-    padding: var(--wpmd-space-1) var(--wpmd-space-2);
+    background: var(--wpmd-bg);
+    border: 1px solid var(--wpmd-border);
+    border-radius: var(--wpmd-radius-md);
+    color: var(--wpmd-text-secondary);
+    font-size: var(--wpmd-text-sm);
+    font-weight: 500;
+    height: 26px;
+    padding: 0 var(--wpmd-space-2);
     cursor: pointer;
     display: inline-flex;
     align-items: center;
-    gap: 3px;
-    transition: all var(--wpmd-transition-fast);
+    gap: var(--wpmd-space-1);
+    transition: all var(--wpmd-transition);
+    white-space: nowrap;
+    line-height: 1.4;
 }
 
 .wpmd-copy-btn:hover,
@@ -847,12 +809,12 @@
     font-size: var(--wpmd-text-sm);
     font-weight: 500;
     font-family: var(--wpmd-mono);
-    color: var(--wpmd-text-secondary);
+    color: var(--wpmd-text-primary);
     background: var(--wpmd-surface-hover);
     border: 1px solid var(--wpmd-border);
     border-radius: var(--wpmd-radius-md);
     padding: var(--wpmd-space-1) var(--wpmd-space-2);
-    transition: all var(--wpmd-transition-fast);
+    transition: all var(--wpmd-transition);
     user-select: none;
     width: fit-content;
 }
@@ -948,7 +910,7 @@
 }
 
 .wpmd-tree-colon {
-    color: var(--wpmd-text-muted);
+    color: var(--wpmd-text-secondary);
     font-size: var(--wpmd-text-sm);
     flex-shrink: 0;
 }
@@ -958,7 +920,7 @@
     font-size: var(--wpmd-text-sm);
     word-break: break-word;
     flex: 1;
-    color: var(--wpmd-text-secondary);
+    color: var(--wpmd-text-primary);
 }
 
 /* ══════════════════════════════════════════════════════════════════════════════
@@ -973,7 +935,7 @@
     border-top: 1px solid var(--wpmd-border);
     background: var(--wpmd-bg);
     font-size: var(--wpmd-text-sm);
-    color: var(--wpmd-text-muted);
+    color: var(--wpmd-text-secondary);
     flex-shrink: 0;
 }
 
@@ -984,7 +946,7 @@
     padding: 1px var(--wpmd-space-2);
     font-size: var(--wpmd-text-xs);
     font-family: var(--wpmd-mono);
-    color: var(--wpmd-text-muted);
+    color: var(--wpmd-text-secondary);
     line-height: 1.4;
 }
 
@@ -1062,9 +1024,9 @@
     padding: var(--wpmd-space-3) var(--wpmd-space-4);
     font-size: var(--wpmd-text-base);
     font-weight: 500;
-    color: var(--wpmd-text-muted);
+    color: var(--wpmd-text-secondary);
     cursor: pointer;
-    transition: all var(--wpmd-transition-fast);
+    transition: all var(--wpmd-transition);
 }
 
 .wpmd-modal-tab:hover {
@@ -1102,7 +1064,7 @@
     max-height: 400px;
     overflow-y: auto;
     line-height: 1.5;
-    color: var(--wpmd-text-secondary);
+    color: var(--wpmd-text-primary);
 }
 
 .wpmd-ai-toolbar {
